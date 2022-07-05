@@ -3,9 +3,11 @@ package com.wixia.rediscache.persistence;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
+@RepositoryRestResource(collectionResourceRel = "customers", path = "customers")
 public interface CustomerRepository extends CrudRepository<CustomerEo, Long>, CustomerRepositorySlow {
 
     List<CustomerEo> findByLastName(String lastName);

@@ -9,5 +9,4 @@ public interface CustomerRepositorySlow {
 
     List<CustomerEo> findByFirstNameAndLastNameDelayable(String firstName, String lastName, long delayInMs);
 
-
 }
