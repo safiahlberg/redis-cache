@@ -7,7 +7,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
-@RepositoryRestResource(collectionResourceRel = "customers", path = "customers")
+@RepositoryRestResource(itemResourceRel = "customer", collectionResourceRel = "customers", path = "customers")
 public interface CustomerRepository extends CrudRepository<CustomerEo, Long>, CustomerRepositorySlow {
 
     List<CustomerEo> findByLastName(String lastName);
