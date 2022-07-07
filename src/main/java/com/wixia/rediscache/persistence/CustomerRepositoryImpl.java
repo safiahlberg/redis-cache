@@ -10,11 +10,11 @@ public class CustomerRepositoryImpl implements CustomerRepositorySlow {
     private EntityManager entityManager;
 
     @Override
-    public Iterable<CustomerEo> findAllDelayable(long delayInMs) {
+    public List<CustomerEo> findAllDelayable(long delayInMs) {
 
            delay(delayInMs);
 
-        return entityManager.createQuery("select c from customer c").getResultList();
+        return entityManager.createQuery("SELECT c FROM customer c").getResultList();
     }
 
     @Override
@@ -22,7 +22,7 @@ public class CustomerRepositoryImpl implements CustomerRepositorySlow {
         delay(delayInMs);
 
         return entityManager.createQuery(
-                "select c from customer c where c.firstName = :searchName or c.lastName = :searchName")
+                "SELECT c FROM customer c WHERE c.firstName = :searchName or c.lastName = :searchName")
                 .getResultList();
     }
 

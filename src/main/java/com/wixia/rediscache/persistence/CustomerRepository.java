@@ -16,6 +16,7 @@ public interface CustomerRepository extends CrudRepository<CustomerEo, Long>, Cu
 
     List<CustomerEo> findByFirstNameAndLastName(String firstName, String lastName);
 
-    @Query("select c from customer c where c.firstName = :searchName or c.lastName = :searchName")
+    @Query("SELECT c FROM customer c WHERE c.firstName = :searchName or c.lastName = :searchName")
     List<CustomerEo> findByFirstNameOrLastName(@Param("searchName") String searchName);
+
 }
