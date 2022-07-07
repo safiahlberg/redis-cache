@@ -1,7 +1,6 @@
 package com.wixia.rediscache.persistence;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 @Entity(name = "item")
 public class ItemEo {
