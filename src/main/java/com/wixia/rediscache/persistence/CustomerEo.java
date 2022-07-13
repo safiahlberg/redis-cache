@@ -3,11 +3,13 @@ package com.wixia.rediscache.persistence;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "customer")
-public class CustomerEo {
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "firstName", "lastName" }) })
+public class CustomerEo implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -17,7 +19,8 @@ public class CustomerEo {
 
     private String lastName;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
+    // EAGER is needed, or else we get in trouble when re-creating from cache
     private List<ItemEo> items;
 
     protected CustomerEo() {}

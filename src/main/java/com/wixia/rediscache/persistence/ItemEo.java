@@ -1,9 +1,10 @@
 package com.wixia.rediscache.persistence;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity(name = "item")
-public class ItemEo {
+public class ItemEo implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

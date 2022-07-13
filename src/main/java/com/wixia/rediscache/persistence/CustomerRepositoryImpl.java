@@ -4,7 +4,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-public class CustomerRepositoryImpl implements CustomerRepositorySlow {
+/**
+ * To simulate delay, in order to test cache effects.
+ */
+public class CustomerRepositoryImpl implements CustomerRepositoryDelayable {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -18,12 +21,15 @@ public class CustomerRepositoryImpl implements CustomerRepositorySlow {
     }
 
     @Override
-    public List<CustomerEo> findByFirstNameAndLastNameDelayable(String firstName, String lastName, long delayInMs) {
+    public CustomerEo findByFirstNameAndLastNameDelayable(String firstName, String lastName, long delayInMs) {
+
         delay(delayInMs);
 
-        return entityManager.createQuery(
-                "SELECT c FROM customer c WHERE c.firstName = :searchName or c.lastName = :searchName")
-                .getResultList();
+        return (CustomerEo) entityManager.createQuery(
+                "SELECT c FROM customer c WHERE c.firstName = :firstName or c.lastName = :lastName")
+            .setParameter("firstName", firstName)
+            .setParameter("lastName", lastName)
+            .getSingleResult();
     }
 
     private void delay(long delayInMs) {
