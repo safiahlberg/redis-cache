@@ -3,6 +3,7 @@ package com.wixia.configuration;
 import io.lettuce.core.ClientOptions;
 import io.lettuce.core.SocketOptions;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -22,7 +23,7 @@ import java.time.Duration;
 
 /**
  * https://stackoverflow.com/questions/26021991/spring-redis-error-handle
- *
+ * <p>
  * Cache properties
  * https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#appendix.application-properties.cache
  */
@@ -47,17 +48,9 @@ public class CacheConfig extends CachingConfigurerSupport implements CachingConf
 
     @Bean
     public RedisCacheManager redisCacheManager(LettuceConnectionFactory lettuceConnectionFactory) {
-
-        RedisCacheConfiguration redisCacheConfiguration = cacheConfiguration();
-
-        redisCacheConfiguration.usePrefix();
-
-        RedisCacheManager redisCacheManager = RedisCacheManager.RedisCacheManagerBuilder
+        return RedisCacheManager.RedisCacheManagerBuilder
             .fromConnectionFactory(lettuceConnectionFactory)
-            .cacheDefaults(redisCacheConfiguration).build();
-
-        redisCacheManager.setTransactionAware(true);
-        return redisCacheManager;
+            .cacheDefaults(cacheConfiguration()).build();
     }
 
     @Bean
@@ -77,6 +70,7 @@ public class CacheConfig extends CachingConfigurerSupport implements CachingConf
         return lettuceConnectionFactory;
 
     }
+/*
 
     @Bean
     public RedisTemplate<Object, Object> redisTemplate() {
@@ -84,6 +78,7 @@ public class CacheConfig extends CachingConfigurerSupport implements CachingConf
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         return redisTemplate;
     }
+*/
 
     @Bean
     public RedisCacheConfiguration cacheConfiguration() {
