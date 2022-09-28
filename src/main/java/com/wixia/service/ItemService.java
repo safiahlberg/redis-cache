@@ -21,18 +21,18 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    @Cacheable(value = "defaultCache")
+    @Cacheable(value = "itemCache")
     public Optional<Item> findById(long id) {
         return itemRepository.findById(id);
     }
 
-    @Cacheable(value = "defaultCache")
+    @Cacheable(value = "itemCache")
     public List<Item> findAll() {
         return StreamSupport.stream(itemRepository.findAll().spliterator(), false)
             .collect(Collectors.toList());
     }
 
-    @CacheEvict(value = "defaultCache")
+    @CacheEvict(value = "itemCache")
     public Item save(Item item) {
         return itemRepository.save(item);
     }
