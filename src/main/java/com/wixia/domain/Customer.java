@@ -52,8 +52,4 @@ public class Customer implements Serializable {
         this.items = copyFrom.items;
     }
 
-    public Optional<Long> getId() {
-        return Optional.ofNullable(this.id);
-    }
-
 }

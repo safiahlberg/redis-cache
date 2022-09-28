@@ -44,7 +44,4 @@ public class Item implements Serializable {
         this.owner = owner;
     }
 
-    public Optional<Long> getId() {
-        return Optional.ofNullable(this.id);
-    }
 }
