@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project xmlns:con="http://eviware.com/soapui/config" id="b00effe9-32f4-412a-847d-dd5240df6dd3" activeEnvironment="Default" name="PUT"
+                    resourceRoot="" soapui-version="5.7.0" abortOnError="false"
+                    runType="SEQUENTIAL">
+    <con:settings/>
+    <con:interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="con:RestService"
+                   id="7e1d5ee2-e6b2-4ebb-90f2-df689ca72f33" wadlVersion="http://wadl.dev.java.net/2009/02" name="http://localhost:8080"
+                   type="rest">
+        <con:settings/>
+        <con:definitionCache/>
+        <con:endpoints>
+            <con:endpoint>http://localhost:8080</con:endpoint>
+        </con:endpoints>
+        <con:resource name="Customers" path="/customers/{id}" id="199100f8-06bc-428a-b7e5-7d36474c66c5">
+            <con:settings/>
+            <con:parameters>
+                <con:parameter>
+                    <con:name>id</con:name>
+                    <con:value/>
+                    <con:style>TEMPLATE</con:style>
+                    <con:default/>
+                    <con:description xsi:nil="true"/>
+                </con:parameter>
+            </con:parameters>
+            <con:method name="Customers 1" id="e6e2f51c-9fee-42fe-a814-32ca7844f650" method="PUT">
+                <con:settings/>
+                <con:parameters/>
+                <con:representation type="RESPONSE">
+                    <con:mediaType>application/hal+json</con:mediaType>
+                    <con:status>200</con:status>
+                    <con:params/>
+                    <con:element xmlns:ns="http://localhost/customers/10">ns:Response</con:element>
+                </con:representation>
+                <con:representation type="REQUEST">
+                    <con:mediaType>application/json</con:mediaType>
+                    <con:params/>
+                </con:representation>
+                <con:representation type="FAULT">
+                    <con:mediaType>application/json</con:mediaType>
+                    <con:status>500</con:status>
+                    <con:params/>
+                    <con:element xmlns:ns="http://localhost/customers/10">ns:Fault</con:element>
+                </con:representation>
+                <con:request name="Request 1" id="e531ae2b-8eb1-4574-92be-f031bae94408" mediaType="application/json"
+                             postQueryString="false">
+                    <con:settings>
+                        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/>
+                        </con:setting>
+                    </con:settings>
+                    <con:endpoint>http://localhost:8080</con:endpoint>
+                    <con:request>{
+                        "id": 6,
+                        "firstName": "Gandalf",
+                        "lastName": "The Grey",
+                        "items": [
+                        {
+                        "id": 5,
+                        "name": "Glamdring",
+                        "price": 5400000
+                        }
+                        ]
+                        }
+                    </con:request>
+                    <con:originalUri>http://localhost/customers/10</con:originalUri>
+                    <con:credentials>
+                        <con:authType>No Authorization</con:authType>
+                    </con:credentials>
+                    <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                    <con:jmsPropertyConfig/>
+                    <con:parameters>
+                        <entry key="id" value="6" xmlns="http://eviware.com/soapui/config"/>
+                    </con:parameters>
+                    <con:parameterOrder>
+                        <con:entry>id</con:entry>
+                    </con:parameterOrder>
+                </con:request>
+            </con:method>
+        </con:resource>
+    </con:interface>
+    <con:properties/>
+    <con:wssContainer/>
+    <con:oAuth2ProfileContainer/>
+    <con:oAuth1ProfileContainer/>
+</con:soapui-project>

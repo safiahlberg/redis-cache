@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project xmlns:con="http://eviware.com/soapui/config" id="a082bbfe-cb63-4c17-a4a0-34f98f2ba74f" activeEnvironment="Default" name="GET"
+                    resourceRoot="" soapui-version="5.7.0" abortOnError="false"
+                    runType="SEQUENTIAL">
+    <con:settings/>
+    <con:interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="con:RestService"
+                   id="f16baa4b-e537-4db5-9182-ba3538a2849d" wadlVersion="http://wadl.dev.java.net/2009/02" name="http://localhost:8080"
+                   type="rest">
+        <con:settings/>
+        <con:definitionCache/>
+        <con:endpoints>
+            <con:endpoint>http://localhost:8080</con:endpoint>
+        </con:endpoints>
+        <con:resource name="Customers" path="/customers" id="814e345e-c9d2-4dd8-822b-f3caf4aa0cd2">
+            <con:settings/>
+            <con:parameters/>
+            <con:resource name="getOne" path="{id}" id="810995e5-3aab-406e-8437-882bde043f84">
+                <con:settings/>
+                <con:parameters>
+                    <con:parameter>
+                        <con:name>id</con:name>
+                        <con:value>id</con:value>
+                        <con:style>TEMPLATE</con:style>
+                        <con:default>id</con:default>
+                    </con:parameter>
+                </con:parameters>
+                <con:method name="getOne" id="170b17cc-d0ba-4315-a4ee-c170288c067a" method="GET">
+                    <con:settings/>
+                    <con:parameters/>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>0</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType>application/hal+json</con:mediaType>
+                        <con:status>200</con:status>
+                        <con:params/>
+                        <con:element xmlns:ns="http://localhost/customers/1">ns:Response</con:element>
+                    </con:representation>
+                    <con:request name="getOne" id="34fd6101-a667-4fdf-b671-10d127c00da5" mediaType="application/json">
+                        <con:settings>
+                            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                        </con:settings>
+                        <con:endpoint>http://localhost:8080</con:endpoint>
+                        <con:request/>
+                        <con:originalUri>http://localhost/customers/1</con:originalUri>
+                        <con:credentials>
+                            <con:authType>No Authorization</con:authType>
+                        </con:credentials>
+                        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                        <con:jmsPropertyConfig/>
+                        <con:parameters>
+                            <entry key="id" value="1" xmlns="http://eviware.com/soapui/config"/>
+                        </con:parameters>
+                    </con:request>
+                </con:method>
+            </con:resource>
+            <con:method name="getAll" id="0b823c6c-8ff9-4c07-bc2e-332bad013f14" method="GET">
+                <con:settings/>
+                <con:parameters/>
+                <con:representation type="RESPONSE">
+                    <con:mediaType>application/hal+json</con:mediaType>
+                    <con:status>200</con:status>
+                    <con:params/>
+                    <con:element xmlns:cus="http://localhost/customers">cus:Response</con:element>
+                </con:representation>
+                <con:representation type="RESPONSE">
+                    <con:mediaType xsi:nil="true"/>
+                    <con:status>0</con:status>
+                    <con:params/>
+                    <con:element>data</con:element>
+                </con:representation>
+                <con:request name="getAll" id="2f095dbf-8f36-4c56-907f-9ca7b8d2a916" mediaType="application/json">
+                    <con:settings>
+                        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/>
+                        </con:setting>
+                    </con:settings>
+                    <con:endpoint>http://localhost:8080</con:endpoint>
+                    <con:request/>
+                    <con:originalUri>http://localhost/customers</con:originalUri>
+                    <con:credentials>
+                        <con:authType>No Authorization</con:authType>
+                    </con:credentials>
+                    <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                    <con:jmsPropertyConfig/>
+                    <con:parameters/>
+                    <con:parameterOrder/>
+                </con:request>
+            </con:method>
+        </con:resource>
+        <con:resource name="Items" path="/items" id="79d2ca11-31a2-4caf-bf99-847333d379c3">
+            <con:settings/>
+            <con:parameters/>
+            <con:resource name="getOne" path="{id}" id="9079a91b-4bd9-4ffb-aefb-4e145e9225b4">
+                <con:settings/>
+                <con:parameters>
+                    <con:parameter>
+                        <con:name>id</con:name>
+                        <con:value>id</con:value>
+                        <con:style>TEMPLATE</con:style>
+                        <con:default>id</con:default>
+                    </con:parameter>
+                </con:parameters>
+                <con:method name="getOne" id="a9c1dd76-86bb-4250-9fa8-56f22dd01eac" method="GET">
+                    <con:settings/>
+                    <con:parameters/>
+                    <con:representation type="FAULT">
+                        <con:mediaType>application/json</con:mediaType>
+                        <con:status>404</con:status>
+                        <con:params/>
+                        <con:element xmlns:ns="http://localhost/items/1">ns:Fault</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType>application/hal+json</con:mediaType>
+                        <con:status>200</con:status>
+                        <con:params/>
+                        <con:element xmlns:ns="http://localhost/items/1">ns:Response</con:element>
+                    </con:representation>
+                    <con:request name="getOne" id="2c31aff2-c77f-49d5-8e97-3a8ad497ef02" mediaType="application/json">
+                        <con:settings>
+                            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                        </con:settings>
+                        <con:endpoint>http://localhost:8080</con:endpoint>
+                        <con:request/>
+                        <con:originalUri>http://localhost/items/1</con:originalUri>
+                        <con:credentials>
+                            <con:authType>No Authorization</con:authType>
+                        </con:credentials>
+                        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                        <con:jmsPropertyConfig/>
+                        <con:parameters>
+                            <entry key="id" value="1" xmlns="http://eviware.com/soapui/config"/>
+                        </con:parameters>
+                    </con:request>
+                </con:method>
+            </con:resource>
+            <con:method name="getAll" id="771efa4d-47eb-4162-acbb-362074b1fdcd" method="GET">
+                <con:settings/>
+                <con:parameters/>
+                <con:representation type="RESPONSE">
+                    <con:mediaType>application/hal+json</con:mediaType>
+                    <con:status>200</con:status>
+                    <con:params/>
+                    <con:element xmlns:item="http://localhost/items">item:Response</con:element>
+                </con:representation>
+                <con:request name="getAll" id="c3f07391-286c-4a65-9b80-36cf9a8c5bfe" mediaType="application/json">
+                    <con:settings>
+                        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/>
+                        </con:setting>
+                    </con:settings>
+                    <con:endpoint>http://localhost:8080</con:endpoint>
+                    <con:request/>
+                    <con:originalUri>http://localhost/items</con:originalUri>
+                    <con:credentials>
+                        <con:authType>No Authorization</con:authType>
+                    </con:credentials>
+                    <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                    <con:jmsPropertyConfig/>
+                    <con:parameters/>
+                </con:request>
+            </con:method>
+        </con:resource>
+    </con:interface>
+    <con:properties/>
+    <con:wssContainer/>
+    <con:oAuth2ProfileContainer/>
+    <con:oAuth1ProfileContainer/>
+    <con:sensitiveInformation/>
+</con:soapui-project>

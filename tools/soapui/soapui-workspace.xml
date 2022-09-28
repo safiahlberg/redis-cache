@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-workspace xmlns:con="http://eviware.com/soapui/config" name="Projects" soapui-version="5.7.0"
+                      projectRoot="${workspaceDir}">
+    <con:settings/>
+    <con:project name="GET">GET-soapui-project.xml</con:project>
+    <con:project name="POST">POST-soapui-project.xml</con:project>
+    <con:project name="PUT">PUT-soapui-project.xml</con:project>
+    <con:collectInfoForSupport>false</con:collectInfoForSupport>
+</con:soapui-workspace>
