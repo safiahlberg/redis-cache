@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RepositoryDelayAspect {
 
+    public static final int DELAY_IN_MS = 3000;
     private final Logger logger = LoggerFactory.getLogger(RepositoryDelayAspect.class);
 
     @Pointcut("within(com.wixia.domain.*Repository+) && execution(* findById(..))")
@@ -28,9 +29,9 @@ public class RepositoryDelayAspect {
     public void before(JoinPoint joinPoint) {
         logger.info("Enter {}.{}, Delaying {}ms",
             joinPoint.getSignature().getDeclaringTypeName(),
-            joinPoint.getSignature().getName(), 7000);
+            joinPoint.getSignature().getName(), DELAY_IN_MS);
 
-        delay(7000);
+        delay(DELAY_IN_MS);
     }
 
     @After("repositoryMethods()")
