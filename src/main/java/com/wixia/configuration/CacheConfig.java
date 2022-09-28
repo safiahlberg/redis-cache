@@ -4,6 +4,7 @@ import io.lettuce.core.ClientOptions;
 import io.lettuce.core.SocketOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -68,9 +69,7 @@ public class CacheConfig extends CachingConfigurerSupport implements CachingConf
             new LettuceConnectionFactory(serverConfig, clientConfig);
         lettuceConnectionFactory.setValidateConnection(true);
         return lettuceConnectionFactory;
-
     }
-/*
 
     @Bean
     public RedisTemplate<Object, Object> redisTemplate() {
@@ -78,7 +77,6 @@ public class CacheConfig extends CachingConfigurerSupport implements CachingConf
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         return redisTemplate;
     }
-*/
 
     @Bean
     public RedisCacheConfiguration cacheConfiguration() {
@@ -94,4 +92,8 @@ public class CacheConfig extends CachingConfigurerSupport implements CachingConf
         return new RedisCacheErrorHandler();
     }
 
+    @Override
+    public CacheManager cacheManager() {
+        return redisCacheManager(redisConnectionFactory());
+    }
 }
