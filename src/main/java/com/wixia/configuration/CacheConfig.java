@@ -1,7 +1,10 @@
 package com.wixia.configuration;
 
+import io.lettuce.core.ClientOptions;
+import io.lettuce.core.SocketOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -9,6 +12,12 @@ import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
@@ -24,7 +33,6 @@ import java.time.Duration;
 @EnableCaching
 public class CacheConfig extends CachingConfigurerSupport implements CachingConfigurer {
 
-/*
     @Value("${redis.hostname:localhost}")
     private String redisHost;
 
@@ -39,8 +47,42 @@ public class CacheConfig extends CachingConfigurerSupport implements CachingConf
 
     @Value("${redis.ttl.hours:1}")
     private int redisDataTTL;
-*/
 
+    @Bean
+    public RedisCacheManager redisCacheManager(
+        LettuceConnectionFactory lettuceConnectionFactory,
+        RedisCacheConfiguration redisCacheConfiguration) {
+        return RedisCacheManager.RedisCacheManagerBuilder
+            .fromConnectionFactory(lettuceConnectionFactory)
+            .cacheDefaults(redisCacheConfiguration).build();
+    }
+
+    @Bean
+    public LettuceConnectionFactory lettuceConnectionFactory() {
+        final SocketOptions socketOptions = SocketOptions.builder()
+            .connectTimeout(Duration.ofSeconds(redisSocketTimeoutInSecs)).build();
+
+        final ClientOptions clientOptions = ClientOptions.builder().socketOptions(socketOptions).build();
+
+        LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
+            .commandTimeout(Duration.ofSeconds(redisTimeoutInSecs)).clientOptions(clientOptions).build();
+        RedisStandaloneConfiguration serverConfig = new RedisStandaloneConfiguration(redisHost, redisPort);
+
+        final LettuceConnectionFactory lettuceConnectionFactory =
+            new LettuceConnectionFactory(serverConfig, clientConfig);
+        lettuceConnectionFactory.setValidateConnection(true);
+
+        return lettuceConnectionFactory;
+    }
+
+    @Bean
+    public RedisTemplate<Object, Object> redisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
+        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<Object, Object>();
+        redisTemplate.setConnectionFactory(lettuceConnectionFactory);
+        return redisTemplate;
+    }
+
+/*
     @Bean
     public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer() {
         return (builder) -> builder
@@ -49,9 +91,10 @@ public class CacheConfig extends CachingConfigurerSupport implements CachingConf
             .withCacheConfiguration("customerCache",
                 RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(5)));
     }
+*/
 
     @Bean
-    public RedisCacheConfiguration cacheConfiguration() {
+    public RedisCacheConfiguration redisCacheConfiguration() {
         return RedisCacheConfiguration.defaultCacheConfig()
             .entryTtl(Duration.ofMinutes(60))
             .disableCachingNullValues()
@@ -63,4 +106,5 @@ public class CacheConfig extends CachingConfigurerSupport implements CachingConf
     public CacheErrorHandler errorHandler() {
         return new RedisCacheErrorHandler();
     }
+
 }
