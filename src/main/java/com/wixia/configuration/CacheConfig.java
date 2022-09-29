@@ -79,15 +79,6 @@ public class CacheConfig extends CachingConfigurerSupport implements CachingConf
         return redisTemplate;
     }
 
-    @Bean
-    public RedisCacheConfiguration redisCacheConfiguration() {
-        return RedisCacheConfiguration.defaultCacheConfig()
-            .entryTtl(Duration.ofMinutes(60))
-            .disableCachingNullValues()
-            .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(
-                new GenericJackson2JsonRedisSerializer()));
-    }
-
     @Override
     public CacheManager cacheManager() {
         return redisCacheManager(redisConnectionFactory(), redisCacheConfiguration());
