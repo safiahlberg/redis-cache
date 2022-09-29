@@ -44,30 +44,6 @@ public class CacheConfig extends CachingConfigurerSupport implements CachingConf
 
     @Value("${redis.ttl.hours:1}")
     private int redisDataTTL;
-/*
-    @Bean
-    public RedisCacheManager redisCacheManager(
-        RedisConnectionFactory redisConnectionFactory,
-        RedisCacheConfiguration redisCacheConfiguration) {
-        return RedisCacheManager.RedisCacheManagerBuilder
-            .fromConnectionFactory(redisConnectionFactory)
-            .cacheDefaults(redisCacheConfiguration).build();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(name = "redisTemplate")
-    @Primary
-    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<Object, Object>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory);
-        return redisTemplate;
-    }
-
-    @Override
-    public CacheManager cacheManager() {
-        return redisCacheManager(redisConnectionFactory(), redisCacheConfiguration());
-    }
- */
 
     @Bean
     public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer() {
