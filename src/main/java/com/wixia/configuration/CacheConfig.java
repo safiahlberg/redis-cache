@@ -3,6 +3,7 @@ package com.wixia.configuration;
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -18,6 +19,7 @@ import java.time.Duration;
  * https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#appendix.application-properties.cache
  */
 @Configuration
+@EnableCaching
 public class CacheConfig extends CachingConfigurerSupport implements CachingConfigurer {
 /*
     @Value("${redis.hostname:localhost}")
