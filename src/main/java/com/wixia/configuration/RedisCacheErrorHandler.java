@@ -14,24 +14,28 @@ public class RedisCacheErrorHandler implements CacheErrorHandler {
     public void handleCacheGetError(RuntimeException exception, Cache cache, Object key) {
         handleTimeOutException(exception);
         log.info("Unable to get from cache " + cache.getName() + " : " + exception.getMessage());
+        log.warn("Cache fault: ", exception);
     }
 
     @Override
     public void handleCachePutError(RuntimeException exception, Cache cache, Object key, Object value) {
         handleTimeOutException(exception);
         log.info("Unable to put into cache " + cache.getName() + " : " + exception.getMessage());
+        log.warn("Cache fault: ", exception);
     }
 
     @Override
     public void handleCacheEvictError(RuntimeException exception, Cache cache, Object key) {
         handleTimeOutException(exception);
         log.info("Unable to evict from cache " + cache.getName() + " : " + exception.getMessage());
+        log.warn("Cache fault: ", exception);
     }
 
     @Override
     public void handleCacheClearError(RuntimeException exception, Cache cache) {
         handleTimeOutException(exception);
         log.info("Unable to clean cache " + cache.getName() + " : " + exception.getMessage());
+        log.warn("Cache fault: ", exception);
     }
 
     /**

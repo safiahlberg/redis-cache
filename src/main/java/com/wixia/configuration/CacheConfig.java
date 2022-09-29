@@ -1,23 +1,9 @@
 package com.wixia.configuration;
 
-import io.lettuce.core.ClientOptions;
-import io.lettuce.core.SocketOptions;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachingConfigurer;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.interceptor.CacheErrorHandler;
+import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
-import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
@@ -30,8 +16,8 @@ import java.time.Duration;
  * https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#appendix.application-properties.cache
  */
 @Configuration
-public class CacheConfig extends CachingConfigurerSupport implements CachingConfigurer {
-
+public class CacheConfig { // extends CachingConfigurerSupport implements CachingConfigurer {
+/*
     @Value("${redis.hostname:localhost}")
     private String redisHost;
 
@@ -104,5 +90,24 @@ public class CacheConfig extends CachingConfigurerSupport implements CachingConf
     @Override
     public CacheManager cacheManager() {
         return redisCacheManager(redisConnectionFactory(), redisCacheConfiguration());
+    }
+ */
+
+    @Bean
+    public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer() {
+        return (builder) -> builder
+            .withCacheConfiguration("itemCache",
+                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(10)))
+            .withCacheConfiguration("customerCache",
+                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(5)));
+    }
+
+    @Bean
+    public RedisCacheConfiguration redisCacheConfiguration() {
+        return RedisCacheConfiguration.defaultCacheConfig()
+            .entryTtl(Duration.ofMinutes(60))
+            .disableCachingNullValues()
+            .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(
+                new GenericJackson2JsonRedisSerializer()));
     }
 }
