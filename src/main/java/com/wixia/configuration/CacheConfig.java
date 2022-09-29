@@ -4,6 +4,7 @@ import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCust
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -87,11 +88,6 @@ public class CacheConfig extends CachingConfigurerSupport implements CachingConf
     }
 
     @Override
-    public CacheErrorHandler errorHandler() {
-        return new RedisCacheErrorHandler();
-    }
-
-    @Override
     public CacheManager cacheManager() {
         return redisCacheManager(redisConnectionFactory(), redisCacheConfiguration());
     }
@@ -114,4 +110,10 @@ public class CacheConfig extends CachingConfigurerSupport implements CachingConf
             .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(
                 new GenericJackson2JsonRedisSerializer()));
     }
+
+    @Override
+    public CacheErrorHandler errorHandler() {
+        return new RedisCacheErrorHandler();
+    }
+
 }
